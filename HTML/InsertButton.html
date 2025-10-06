@@ -1,12 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reopenning of College Program</title>
-</head>
+<html>
 <body>
-    <button type = "submit" id = "btn-1">Click Here</button>
-    <script src = "InsertButton.js"></script>
-</body> 
+
+<ul id="car-list"></ul> 
+
+<script>
+const cars = ["Audi", "BMW", "Chevrolet", "Ford", "Honda", "Hyundai", "Jeep", "Kia", "Lexus", "Mercedes-Benz", "Nissan", "Porsche", "Toyota", "Volkswagen", "Volvo"];
+const list = document.getElementById("car-list");
+
+cars.forEach(car => {
+  const li = document.createElement("li"); 
+  li.textContent = car;                    
+  list.appendChild(li);                  
+});
+</script>
+
+</body>
 </html>

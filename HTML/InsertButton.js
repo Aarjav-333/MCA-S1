@@ -10,5 +10,8 @@
 // });
 
 
-const cars = ["bmw", "mercedes", "koenigsegg", "audi"];
-console.log(cars[0]);
+// const cars = ["bmw", "mercedes", "koenigsegg", "audi"];
+// console.log(cars[0]);
+
+
+
