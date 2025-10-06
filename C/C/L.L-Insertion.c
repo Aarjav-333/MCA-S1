@@ -14,6 +14,8 @@ void InsertionAtFront(int value)
     newnode->data=value;
     newnode->next=head;
     head=newnode; 
+    
+    
 }
 
 void InsertionAtRear(int value)
