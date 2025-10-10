@@ -14,11 +14,11 @@ int main() {
     setB |= (1 << 4);
     setB |= (1 << 5);
 
-    // Union
+    // Union ------------- shows all elements 
     unionSet = setA | setB;
-    // Intersection
+    // Intersection ------ shows common
     interSet = setA & setB;
-    // Difference (A - B)
+    // Difference (A - B)    
     diffSet = setA & ~setB;
 
     // Print sets
