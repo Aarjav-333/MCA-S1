@@ -1,7 +1,7 @@
 # Function to find GCD using Euclidean algorithm
 def find_gcd(a, b):
     while b != 0:
-        a, b = b, a % b   # Keep replacing a with b and b with remainder
+        a, b = b, a % b   # Keep replacing a with b and b with remainder 
     return a
 
 # Input numbers
