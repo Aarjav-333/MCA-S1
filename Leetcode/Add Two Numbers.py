@@ -24,3 +24,13 @@ class Solution:
             if l2: l2 = l2.next
         
         return dummy.next  # skip dummy head
+
+l1 = ListNode(2, ListNode(4, ListNode(3)))
+l2 = ListNode(5, ListNode(6, ListNode(4)))
+
+sol = Solution()
+result = sol.addTwoNumbers(l1,l2)
+
+while result:
+    print(result.val, end = "-> ")
+    result = result.next
