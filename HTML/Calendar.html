@@ -19,7 +19,6 @@
 
       let out = "";
       for (let m = 0; m < 12; m++) {
-        
         out += `\n📅 ${mNames[m]} ${y}\nSun Mon Tue Wed Thu Fri Sat\n`;
         let first = new Date(y, m, 1).getDay(); //day of the week for the specified date
         let days = new Date(y, m + 1, 0).getDate(); //means the 0th day of the next month, which means the last day of the current month

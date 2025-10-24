@@ -134,8 +134,8 @@
           <table class="innertable">
             <tr><th>Home</th><th>Office</th></tr>
             <tr>
-              <td><input type="text" name="home_phone" pattern="[0-9]{10}" title="Enter 10-digit number" required></td>
-              <td><input type="text" name="office_phone" pattern="[0-9]{10}" title="Enter 10-digit number"></td>
+              <td><input type="number" name="home_phone" pattern="[0-9]{10}" title="Enter 10-digit number" required></td>
+              <td><input type="number" name="office_phone" pattern="[0-9]{10}" title="Enter 10-digit number"></td>
             </tr>
           </table>
         </td>
@@ -143,12 +143,12 @@
 
       <tr>
         <td>Upload CV:</td>
-        <td><input type="file" name="file"></td>
+        <td><input type="file" name="file" required></td>
       </tr>
 
       <tr>
         <td colspan="2" style="text-align:center;">
-          <input type="submit" value="Submit">
+          <input type="submit" onclick="dontSubmit(event)" value="Submit">
           <input type="reset" value="Reset">
         </td>
       </tr>
@@ -156,6 +156,10 @@
   </form>
 
   <script>
+    function dontSubmit(event){
+       // event.preventDefault();
+    }
+
     function validatePasswords() {
       let pass = document.getElementById("password").value;
       let repass = document.getElementById("repassword").value;
