@@ -9,7 +9,6 @@
     <label for="number">Select a number:</label>
     <select name="number" id="number">
         <?php
-        // Generate dropdown options using a for loop
         for ($i = 1; $i <= 100; $i++) {
             echo "<option value='$i'>$i</option>";
         }
@@ -19,10 +18,9 @@
 </form>
 
 <?php
-// When form is submitted
 if (isset($_POST['submit'])) {
-    $selectedNumber = $_POST['number']; // Get selected value
-    echo "<script>alert('You selected: $selectedNumber');</script>"; // Show alert box
+    $selectedNumber = $_POST['number']; 
+    echo "<script>alert('You selected: $selectedNumber');</script>"; 
 }
 ?>
 
