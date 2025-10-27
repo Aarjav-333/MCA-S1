@@ -8,7 +8,7 @@
     if (isset($_GET['name'])) {
         $name = htmlspecialchars($_GET['name']); 
     } else {
-        echo "<h2>No name provided. Please go back and enter your name.</h2>";
+        echo "<h2>No name provided.</h2>";
     }
     ?>
 </body>
