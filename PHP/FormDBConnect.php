@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Student Entry Form</title>
+    <title>Student Entry Form with Total</title>
 </head>
 <body>
     <h2>🎓 Student Entry Form</h2>
@@ -45,14 +45,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $mark1  = $_POST['mark1'];
     $mark2  = $_POST['mark2'];
 
-    // Prepare and execute query
-    $sql = "INSERT INTO students (rollno, name, gender, mark1, mark2) VALUES (?, ?, ?, ?, ?)";
+    // Calculate total
+    $total = $mark1 + $mark2;
+
+    // Insert data into table
+    $sql = "INSERT INTO students (rollno, name, gender, mark1, mark2, Total_Mark) VALUES (?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
 
     if (!$stmt) {
         die("❌ SQL prepare failed: " . $conn->error);
     }
-    $stmt->bind_param("issii", $rollno, $name, $gender, $mark1, $mark2);
+
+    $stmt->bind_param("issiii", $rollno, $name, $gender, $mark1, $mark2, $total);
 
     if ($stmt->execute()) {
         echo "<h3>✅ Record Saved Successfully!</h3>";
@@ -61,6 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "<p>Gender: $gender</p>";
         echo "<p>Mark 1: $mark1</p>";
         echo "<p>Mark 2: $mark2</p>";
+        echo "<p><strong>Total: $total</strong></p>";
     } else {
         echo "❌ Error: " . $stmt->error;
     }
