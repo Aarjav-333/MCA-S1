@@ -2,7 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Student Entry Form with Total</title>
+    <title>Student Entry Form with Database Records</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
 </head>
 <body>
     <h2>🎓 Student Entry Form</h2>
@@ -29,50 +39,55 @@
     </form>
 
 <?php
+// Database connection
+$conn = new mysqli("localhost", "root", "", "db1");
+if ($conn->connect_error) {
+    die("❌ Connection failed: " . $conn->connect_error);
+}
+
+// Insert new record if form submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-    // Database connection
-    $conn = new mysqli("localhost", "root", "", "db1");
-
-    if ($conn->connect_error) {
-        die("❌ Connection failed: " . $conn->connect_error);
-    }
-
-    // Get form data
     $rollno = $_POST['rollno'];
     $name   = $_POST['name'];
     $gender = $_POST['gender'];
     $mark1  = $_POST['mark1'];
     $mark2  = $_POST['mark2'];
+    $total  = $mark1 + $mark2;
 
-    // Calculate total
-    $total = $mark1 + $mark2;
-
-    // Insert data into table
     $sql = "INSERT INTO students (rollno, name, gender, mark1, mark2, Total_Mark) VALUES (?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-
-    if (!$stmt) {
-        die("❌ SQL prepare failed: " . $conn->error);
+    if ($stmt) {
+        $stmt->bind_param("issiii", $rollno, $name, $gender, $mark1, $mark2, $total);
+        $stmt->execute();
+        $stmt->close();
     }
-
-    $stmt->bind_param("issiii", $rollno, $name, $gender, $mark1, $mark2, $total);
-
-    if ($stmt->execute()) {
-        echo "<h3>✅ Record Saved Successfully!</h3>";
-        echo "<p>Roll No: $rollno</p>";
-        echo "<p>Name: $name</p>";
-        echo "<p>Gender: $gender</p>";
-        echo "<p>Mark 1: $mark1</p>";
-        echo "<p>Mark 2: $mark2</p>";
-        echo "<p><strong>Total: $total</strong></p>";
-    } else {
-        echo "❌ Error: " . $stmt->error;
-    }
-
-    $stmt->close();
-    $conn->close();
 }
+
+// Fetch all records from the database
+$result = $conn->query("SELECT * FROM students ORDER BY rollno ASC");
+
+if ($result->num_rows > 0) {
+    echo "<h3>📋 Student Records</h3>";
+    echo "<table>";
+    echo "<tr><th>Roll No</th><th>Name</th><th>Gender</th><th>Mark 1</th><th>Mark 2</th><th>Total</th></tr>";
+
+    while($row = $result->fetch_assoc()) {
+        echo "<tr>
+                <td>{$row['rollno']}</td>
+                <td>{$row['name']}</td>
+                <td>{$row['gender']}</td>
+                <td>{$row['mark1']}</td>
+                <td>{$row['mark2']}</td>
+                <td>{$row['Total_Mark']}</td>
+              </tr>";
+    }
+
+    echo "</table>";
+} else {
+    echo "<p>No records found.</p>";
+}
+
+$conn->close();
 ?>
 </body>
 </html>
