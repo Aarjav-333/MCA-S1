@@ -27,10 +27,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST['name'];
     $mark = $_POST['mark'];
 
-    // Escape special characters to avoid SQL errors
-   // $name = $conn->real_escape_string($name);
-
-    // Use direct query (no placeholders)
     $sql = "INSERT INTO tb1 (name, mark) VALUES ('$name', $mark)";
 
     if ($conn->query($sql) === TRUE) {
@@ -42,7 +38,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     $conn->close();
-}
+}    // Escape special characters to avoid SQL errors
+   // $name = $conn->real_escape_string($name);
+
+    // Use direct query (no placeholders)
 ?>
 </body>
 </html>
+
