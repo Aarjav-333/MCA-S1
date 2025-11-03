@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Student Entry Form with Database Records</title>
+    <title>Student Entry Form with Roll No Check</title>
     <style>
         table, th, td {
             border: 1px solid black;
@@ -39,13 +39,12 @@
     </form>
 
 <?php
-// Database connection
+// Connect to the database
 $conn = new mysqli("localhost", "root", "", "db1");
 if ($conn->connect_error) {
     die("❌ Connection failed: " . $conn->connect_error);
 }
 
-// Insert new record if form submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $rollno = $_POST['rollno'];
     $name   = $_POST['name'];
@@ -54,16 +53,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $mark2  = $_POST['mark2'];
     $total  = $mark1 + $mark2;
 
-    $sql = "INSERT INTO students (rollno, name, gender, mark1, mark2, Total_Mark) VALUES (?, ?, ?, ?, ?, ?)";
-    $stmt = $conn->prepare($sql);
-    if ($stmt) {
+    // Check if Roll No already exists
+    $check = $conn->prepare("SELECT rollno FROM students WHERE rollno = ?");
+    $check->bind_param("i", $rollno);
+    $check->execute();
+    $check->store_result();
+
+    if ($check->num_rows > 0) {
+        // Roll No exists -> show alert
+        echo "<script>alert('❌ Roll No $rollno already exists! Please enter a unique Roll No.');</script>";
+    } else {
+        // Roll No does not exist -> insert new record
+        $stmt = $conn->prepare("INSERT INTO students (rollno, name, gender, mark1, mark2, total) VALUES (?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("issiii", $rollno, $name, $gender, $mark1, $mark2, $total);
         $stmt->execute();
         $stmt->close();
     }
+
+    $check->close();
 }
 
-// Fetch all records from the database
+// Fetch all records from database
 $result = $conn->query("SELECT * FROM students ORDER BY rollno ASC");
 
 if ($result->num_rows > 0) {
@@ -71,14 +81,14 @@ if ($result->num_rows > 0) {
     echo "<table>";
     echo "<tr><th>Roll No</th><th>Name</th><th>Gender</th><th>Mark 1</th><th>Mark 2</th><th>Total</th></tr>";
 
-    while($row = $result->fetch_assoc()) {
+    while ($row = $result->fetch_assoc()) {
         echo "<tr>
                 <td>{$row['rollno']}</td>
                 <td>{$row['name']}</td>
                 <td>{$row['gender']}</td>
                 <td>{$row['mark1']}</td>
                 <td>{$row['mark2']}</td>
-                <td>{$row['Total_Mark']}</td>
+                <td>{$row['total']}</td>
               </tr>";
     }
 
