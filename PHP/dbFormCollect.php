@@ -16,6 +16,7 @@
         <button type="submit">Submit</button>
         <button type="reset">Reset</button>
     </form>
+
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $conn = new mysqli("localhost", "root", "", "db1");
@@ -26,26 +27,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST['name'];
     $mark = $_POST['mark'];
 
-    $sql = "INSERT INTO tb1 (name, mark) VALUES (?, ?)";
-    $stmt = $conn->prepare($sql);
-    if (!$stmt) {
-        die("❌ SQL prepare failed: " . $conn->error);
-    }
+    // Escape special characters to avoid SQL errors
+   // $name = $conn->real_escape_string($name);
 
-    $stmt->bind_param("si", $name, $mark);
+    // Use direct query (no placeholders)
+    $sql = "INSERT INTO tb1 (name, mark) VALUES ('$name', $mark)";
 
-    if ($stmt->execute()) {
+    if ($conn->query($sql) === TRUE) {
         echo "<h2>✅ Record Saved Successfully!</h2>";
         echo "<p>Name: $name</p>";
         echo "<p>Mark: $mark</p>";
     } else {
-        echo "❌ Error executing statement: " . $stmt->error;
+        echo "❌ Error: " . $conn->error;
     }
 
-    $stmt->close();
     $conn->close();
 }
 ?>
-
 </body>
 </html>
