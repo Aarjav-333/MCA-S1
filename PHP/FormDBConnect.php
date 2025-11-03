@@ -14,7 +14,7 @@
     </style>
 </head>
 <body>
-    <h2>🎓 Student Entry Form</h2>
+    <h2>🎓🧑‍🎓 Student Entry Form</h2>
 
     <form action="" method="POST">
         <label>Roll No:</label>
