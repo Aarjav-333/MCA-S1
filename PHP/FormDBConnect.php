@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Student Entry Form with Roll No Check</title>
+
     <style>
         table, th, td {
             border: 1px solid black;
