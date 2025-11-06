@@ -74,7 +74,7 @@ $result = $stmt->get_result();
 
 if ($result->num_rows > 0) {
     // Valid credentials — redirect to blank page
-    echo "Login Success!";
+    header("Location: admin_home.php");
     exit();
 } else {
     echo "<h3 style='color:red; text-align:center;'>Invalid username or password.</h3>";
