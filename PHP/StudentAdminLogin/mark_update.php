@@ -1,9 +1,9 @@
 <?php include('db.php'); ?>
 <!DOCTYPE html>
 <html>
-<head><title>Mark Entry</title></head>
+<head><title>Mark Update</title></head>
 <body>
-<h2>Mark Entry</h2>
+<h2>Mark Update</h2>
 <form method="post">
     Roll No: 
     <select name="rollno">
@@ -26,7 +26,7 @@ if (isset($_POST['search'])) {
         echo "Science: <input type='text' name='science'><br><br>";
         echo "Maths: <input type='text' name='maths'><br><br>";
         echo "English: <input type='text' name='english'><br><br>";
-        echo "<input type='submit' name='save' value='Save'>";
+        echo "<input type='submit' name='save' value='Update'>";
         echo "<input type='reset' value='Reset'>";
         echo "<input type='hidden' name='roll' value='{$roll}'>";
     }
@@ -38,7 +38,7 @@ if (isset($_POST['save'])) {
     $math = $_POST['maths'];
     $eng = $_POST['english'];
    $conn->query("UPDATE marks SET science='$sci', maths='$math', english='$eng' WHERE rollno='$roll'");
-    echo "<script>alert('Marks Saved');</script>";
+    echo "<script>alert('Marks Updated');</script>";
 }
 ?>
 </form>
