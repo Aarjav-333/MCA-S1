@@ -6,7 +6,7 @@ int adj[MAX][MAX];
 int visited[MAX];
 int queue[MAX];
 int front = -1, rear = -1;
-int n; // Number of vertices
+int n;
 
 void enqueue(int v) {
     if (rear == MAX - 1)
@@ -28,7 +28,7 @@ void BFS(int start) {
 
     while (front <= rear) {
         int v = dequeue();
-        printf("%d ", v);
+        printf("%d ", v + 1);  // convert back to 1-based when printing
 
         for (int i = 0; i < n; i++) {
             if (adj[v][i] == 1 && visited[i] == 0) {
@@ -48,7 +48,6 @@ int main() {
     printf("Enter number of edges: ");
     scanf("%d", &edges);
 
-    // Initialize adjacency matrix with 0
     for (int i = 0; i < n; i++)
         for (int j = 0; j < n; j++)
             adj[i][j] = 0;
@@ -56,19 +55,20 @@ int main() {
     printf("Enter the edges (u v):\n");
     for (int i = 0; i < edges; i++) {
         scanf("%d%d", &v1, &v2);
-        adj[v1][v2] = 1;
-        adj[v2][v1] = 1; // For undirected graph
+        v1--; v2--;  // convert to 0-based
+        adj[v1][v2] = adj[v2][v1] = 1;
     }
 
     printf("Enter the starting vertex: ");
     scanf("%d", &start);
+    start--; // convert to 0-based
 
-    // Initialize visited array
     for (int i = 0; i < n; i++)
         visited[i] = 0;
 
     printf("BFS Traversal: ");
     BFS(start);
+    printf("\n");
 
     return 0;
 }

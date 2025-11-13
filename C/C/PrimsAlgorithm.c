@@ -1,9 +1,8 @@
 #include <stdio.h>
 #include <limits.h>
 
-#define V 5  // Number of vertices in the graph
+#define V 5 
 
-// Function to find the vertex with the minimum key value
 int minKey(int key[], int mstSet[]) {
     int min = INT_MAX, min_index;
 
