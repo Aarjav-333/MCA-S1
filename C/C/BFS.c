@@ -2,11 +2,11 @@
 
 #define MAX 10
 
-int adj[MAX][MAX];
-int visited[MAX];
-int queue[MAX];
-int front = -1, rear = -1;
-int n;
+int adj[MAX][MAX]; //adjacency matrix of the graph
+int visited[MAX];//marks visited vertices
+int queue[MAX];//queue for BFS
+int front = -1, rear = -1;//queue pointers
+int n;//number of vertices
 
 void enqueue(int v) {
     if (rear == MAX - 1)
@@ -27,7 +27,7 @@ void BFS(int start) {
     enqueue(start);
 
     while (front <= rear) {
-        int v = dequeue();
+        int v = dequeue(); //Use the value before incrementing Then increase front by 1
         printf("%d ", v + 1);  // convert back to 1-based when printing
 
         for (int i = 0; i < n; i++) {
