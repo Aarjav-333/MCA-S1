@@ -2,11 +2,11 @@
 #include <limits.h>
 
 #define V 5 
-
-int minKey(int key[], int mstSet[]) {
+            //key[]: stores the minimum weight edge to connect each vertex to the MST.                  //mstSet[]: 0 → not included, 1 → included.
+int minKey(int key[], int mstSet[]) { //Finds the vertex that is not yet included in the MST and has the minimum key value.
     int min = INT_MAX, min_index;
 
-    for (int v = 0; v < V; v++)
+    for (int v = 0; v < V; v++) 
         if (mstSet[v] == 0 && key[v] < min)
             min = key[v], min_index = v;
 
@@ -39,7 +39,7 @@ void primMST(int graph[V][V]) {
     parent[0] = -1; // First node is root of MST
 
     // MST will have V vertices
-    for (int count = 0; count < V - 1; count++) {
+    for (int count = 0; count < V - 1; count++) { //Because a Minimum Spanning Tree (MST) for a graph with V vertices always contains exactly V − 1 edges.
         int u = minKey(key, mstSet);
         mstSet[u] = 1;
 
